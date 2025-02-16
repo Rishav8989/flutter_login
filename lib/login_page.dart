@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:login/registration_page.dart';
 import 'home_page.dart'; // Import HomePage
 import 'main.dart'; // Import the global pb instance
+import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,6 +17,12 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   String? _errorMessage;
   bool _isLoading = false;
+
+  Future<void> _storeToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('pb_auth_token', token);
+    print('Token stored in cache');
+  }
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
@@ -36,6 +43,10 @@ class _LoginPageState extends State<LoginPage> {
         print('Auth Token: ${pb.authStore.token}');
         print(
             'User ID: ${pb.authStore.record?.id}'); // Use ?. to avoid null access error if record is null
+
+        // Store the token in cache
+        await _storeToken(pb.authStore.token);
+
 
         // Navigate to the home page
         Navigator.pushReplacement(
@@ -79,7 +90,8 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.all(20.0),
           child: Form(
             key: _formKey,
-            child: ConstrainedBox( // ADDED: Constrain the column's width
+            child: ConstrainedBox(
+              // ADDED: Constrain the column's width
               constraints: BoxConstraints(maxWidth: maxWidth),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +104,8 @@ class _LoginPageState extends State<LoginPage> {
                         style: const TextStyle(color: Colors.red),
                       ),
                     ),
-                  ConstrainedBox(  // Added to wrap TextFormField
+                  ConstrainedBox(
+                    // Added to wrap TextFormField
                     constraints: BoxConstraints(maxWidth: maxWidth),
                     child: TextFormField(
                       controller: _emailController,
@@ -111,7 +124,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  ConstrainedBox( // Added to wrap TextFormField
+                  ConstrainedBox(
+                    // Added to wrap TextFormField
                     constraints: BoxConstraints(maxWidth: maxWidth),
                     child: TextFormField(
                       controller: _passwordController,
@@ -130,7 +144,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  ConstrainedBox( // Added to wrap ElevatedButton
+                  ConstrainedBox(
+                    // Added to wrap ElevatedButton
                     constraints: BoxConstraints(maxWidth: maxWidth),
                     child: ElevatedButton(
                       onPressed: _isLoading ? null : _login,
@@ -146,7 +161,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  ConstrainedBox( // Added to wrap TextButton
+                  ConstrainedBox(
+                    // Added to wrap TextButton
                     constraints: BoxConstraints(maxWidth: maxWidth),
                     child: TextButton(
                       onPressed: () {

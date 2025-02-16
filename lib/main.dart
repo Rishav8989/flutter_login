@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'home_page.dart'; // Import HomePage
 import 'package:pocketbase/pocketbase.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
 
 final pb = PocketBase('https://first.pockethost.io/');
 
@@ -14,14 +15,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return MaterialApp(
       title: 'Flutter PocketBase Login',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: AuthCheck(), // Use AuthCheck widget as the initial home
+      home: const AuthCheck(), // Use AuthCheck widget as the initial home
     );
   }
 }
@@ -34,6 +34,23 @@ class AuthCheck extends StatefulWidget {
 }
 
 class _AuthCheckState extends State<AuthCheck> {
+
+  Future<String?> _getCachedToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('pb_auth_token');
+  }
+
+  Future<void> _loadCachedToken() async {
+    final cachedToken = await _getCachedToken();
+    if (cachedToken != null) {
+      pb.authStore.save(cachedToken, pb.authStore.model); // Load token into authStore
+      print('Cached token loaded.');
+    } else {
+      print('No cached token found.');
+    }
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -41,8 +58,10 @@ class _AuthCheckState extends State<AuthCheck> {
   }
 
   Future<void> _checkAuth() async {
+    await _loadCachedToken(); // Try to load cached token first
     // Wait for the auth store to be initialized (important on app start)
     await Future.delayed(Duration.zero); // Ensures build context is available
+
 
     if (pb.authStore.isValid) {
       print('User is already logged in (Token: ${pb.authStore.token})');
