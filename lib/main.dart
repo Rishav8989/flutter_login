@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login/utils/app_theme.dart';
 import 'login_page.dart';
 import 'home_page.dart'; // Import HomePage
 import 'package:pocketbase/pocketbase.dart';
@@ -17,48 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Notes App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue, // Primary color is blue for light theme
-        primaryColor: Colors.blue, // Ensure primaryColor is blue
-        textTheme: const TextTheme( // Customize default text color for light theme if needed
-          bodyMedium: TextStyle(color: Colors.black87), // Example: Default text color is dark grey in light theme
-          // You can customize other text styles here for light theme
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData( // Style for ElevatedButton in light theme
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue, // Button background color is blue
-            foregroundColor: Colors.white, // Button text color is white
-          ),
-        ),
-        // You can customize other parts of the light theme if needed
-      ),
-      darkTheme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.grey[900],
-        primaryColor: Colors.blue, // Ensure primaryColor is blue in dark theme as well if you want blue accents
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black87,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(color: Colors.white), // Default text color is white in dark theme
-          // You can customize other text styles here for dark theme
-        ),
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Colors.blue, // FAB background is blue
-          foregroundColor: Colors.white, // FAB icon color is white
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
-        elevatedButtonTheme: ElevatedButtonThemeData( // Style for ElevatedButton in dark theme
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue, // Button background color is blue
-            foregroundColor: Colors.white, // Button text color is white
-          ),
-        ),
-        // Customize other dark theme aspects as needed
-      ),
-      themeMode: ThemeMode.system,
+      theme: darkTheme,       // Use appTheme from app_theme.dart
+      // Remove darkTheme and themeMode as you are using only default theme
       debugShowCheckedModeBanner: false,
       home: const AuthCheck(),
     );
