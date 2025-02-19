@@ -37,6 +37,7 @@ dependencies:
   pocketbase: ^0.22.0
   shared_preferences: ^2.5.2
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
