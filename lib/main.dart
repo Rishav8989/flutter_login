@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Notes App',
       theme: amoled,
-      themeMode: ThemeMode.system, // Keep or remove themeMode based on if you want system theme or always light
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home: const AuthCheck(),
     );
