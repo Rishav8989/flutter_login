@@ -11,7 +11,7 @@ class HomeAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        'Solar Square'.tr, // Using translation for App Name
+        'Solar'.tr, // Using translation for App Name
       ),
       centerTitle: true,
       actions: <Widget>[
