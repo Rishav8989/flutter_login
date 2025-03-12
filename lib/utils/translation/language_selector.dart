@@ -10,30 +10,36 @@ class LanguageSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final LocaleController localeController = Get.find<LocaleController>();
 
-    return DropdownButton<Locale>(
-      value: TranslationService.supportedLocales
-              .contains(localeController.currentLocale)
-          ? localeController.currentLocale
-          : TranslationService.fallbackLocale, // Ensure value is valid
-      icon: const Icon(Icons.language, color: Colors.white),
-      dropdownColor: Theme.of(context).appBarTheme.backgroundColor,
-      style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
-      underline: Container(), // Remove underline
-      items: TranslationService.supportedLocales.map((Locale locale) {
-        return DropdownMenuItem<Locale>(
-          value: locale,
-          child: Text(
-            _getLanguageName(locale), // Show proper language names
-            style:
-                TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
-          ),
-        );
-      }).toList(),
-      onChanged: (Locale? newLocale) {
-        if (newLocale != null) {
-          localeController.setLocale(newLocale);
-        }
-      },
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0), // Internal padding
+      decoration: BoxDecoration(
+        color: Theme.of(context).appBarTheme.backgroundColor, // Match AppBar color
+        borderRadius: BorderRadius.circular(8.0), // Rounded corners
+      ),
+      child: DropdownButtonHideUnderline( // Hide default underline
+        child: DropdownButton<Locale>(
+          value: TranslationService.supportedLocales.contains(localeController.currentLocale)
+              ? localeController.currentLocale
+              : TranslationService.fallbackLocale, // Ensure value is valid
+          icon: const Icon(Icons.language, color: Colors.white),
+          dropdownColor: Theme.of(context).appBarTheme.backgroundColor,
+          style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
+          items: TranslationService.supportedLocales.map((Locale locale) {
+            return DropdownMenuItem<Locale>(
+              value: locale,
+              child: Text(
+                _getLanguageName(locale),
+                style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
+              ),
+            );
+          }).toList(),
+          onChanged: (Locale? newLocale) {
+            if (newLocale != null) {
+              localeController.setLocale(newLocale);
+            }
+          },
+        ),
+      ),
     );
   }
 
@@ -51,9 +57,9 @@ class LanguageSelector extends StatelessWidget {
       case 'mr':
         return 'मराठी (Marathi)';
       case 'ta':
-        return 'தமிழ் (Tamil)'; // ✅ Fixed Tamil display issue
+        return 'தமிழ் (Tamil)';
       default:
-        return locale.languageCode.toUpperCase(); // Fallback
+        return locale.languageCode.toUpperCase();
     }
   }
 }

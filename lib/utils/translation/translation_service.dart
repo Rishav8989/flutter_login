@@ -13,54 +13,104 @@ class TranslationService extends Translations {
   ];
 
   @override
-  Map<String, Map<String, String>> get keys => {
-        'en_US': enUS, // English translations
-        'hi_IN': hiIN, // Hindi translations
-        'bn_IN': bnIN, // Bengali translations
-        'te_IN': teIN, // Telugu translations
-        'mr_IN': mrIN, // Marathi translations
-        'ta_IN': taIN, // Tamil translations
-      };
+  Map<String, Map<String, String>> get keys => translations;
 }
 
-// English translations (en_US)
-const Map<String, String> enUS = {
-  'appName': 'My App',
-  'hello': 'Hello',
-  'Solar Square': 'Solar Square',
-};
-
-// Hindi translations (hi_IN)
-const Map<String, String> hiIN = {
-  'appName': 'मेरा ऐप',
-  'hello': 'नमस्ते',
-  'Solar Square': 'सोलर स्क्वेयर',
-};
-
-// Bengali translations (bn_IN)
-const Map<String, String> bnIN = {
-  'appName': 'আমার অ্যাপ',
-  'hello': 'নমস্কার',
-  'Solar Square': 'সোলার স্কোয়ার',
-};
-
-// Telugu translations (te_IN)
-const Map<String, String> teIN = {
-  'appName': 'నా యాప్',
-  'hello': 'నమస్కారం',
-  'Solar Square': 'సోలార్ స్క్వేర్',
-};
-
-// Marathi translations (mr_IN)
-const Map<String, String> mrIN = {
-  'appName': 'माझे अॅप',
-  'hello': 'नमस्कार',
-  'Solar Square': 'सोलार स्क्वेअर',
-};
-
-// Tamil translations (ta_IN)
-const Map<String, String> taIN = {
-  'appName': 'என் பயன்பாடு',
-  'hello': 'வணக்கம்',
-  'Solar Square': 'சோலார் ஸ்கொயர்',
+final Map<String, Map<String, String>> translations = {
+  'en': {
+    'view_profile': 'View Profile',
+    'account_security': 'Account and Security',
+    'general': 'General',
+    'service_provider': 'My Service Provider',
+    'website': 'Website',
+    'notifications': 'Notifications',
+    'reports': 'Reports',
+    'app_sharing': 'Application Sharing',
+    'declaration': 'Declaration',
+    'about': 'About',
+    'monitoring': 'Monitoring',
+    'faults': 'Faults',
+    'support': 'Support',
+    'account': 'Account',
+  },
+  'hi': {
+    'view_profile': 'प्रोफ़ाइल देखें',
+    'account_security': 'खाता और सुरक्षा',
+    'general': 'सामान्य',
+    'service_provider': 'मेरे सेवा प्रदाता',
+    'website': 'वेबसाइट',
+    'notifications': 'सूचनाएँ',
+    'reports': 'रिपोर्ट्स',
+    'app_sharing': 'एप्लिकेशन साझाकरण',
+    'declaration': 'घोषणा',
+    'about': 'बारे में',
+    'monitoring': 'निगरानी',
+    'faults': 'दोष',
+    'support': 'समर्थन',
+    'account': 'खाता',
+  },
+  'bn': {
+    'view_profile': 'প্রোফাইল দেখুন',
+    'account_security': 'অ্যাকাউন্ট ও নিরাপত্তা',
+    'general': 'সাধারণ',
+    'service_provider': 'আমার পরিষেবা প্রদানকারী',
+    'website': 'ওয়েবসাইট',
+    'notifications': 'বিজ্ঞপ্তি',
+    'reports': 'রিপোর্ট',
+    'app_sharing': 'অ্যাপ শেয়ারিং',
+    'declaration': 'ঘোষণা',
+    'about': 'পরিচিতি',
+    'monitoring': 'পর্যবেক্ষণ',
+    'faults': 'ত্রুটি',
+    'support': 'সহায়তা',
+    'account': 'অ্যাকাউন্ট',
+  },
+  'te': {
+    'view_profile': 'ప్రొఫైల్ చూడండి',
+    'account_security': 'ఖాతా మరియు భద్రత',
+    'general': 'సాధారణ',
+    'service_provider': 'నా సేవా ప్రదాత',
+    'website': 'వెబ్‌సైట్',
+    'notifications': 'నోటిఫికేషన్‌లు',
+    'reports': 'నివేదికలు',
+    'app_sharing': 'యాప్ పంచుకోడం',
+    'declaration': 'ప్రకటన',
+    'about': 'గురించి',
+    'monitoring': 'నిఘా',
+    'faults': 'లోపాలు',
+    'support': 'మద్దతు',
+    'account': 'ఖాతా',
+  },
+  'mr': {
+    'view_profile': 'प्रोफाइल पहा',
+    'account_security': 'खाते आणि सुरक्षा',
+    'general': 'सामान्य',
+    'service_provider': 'माझा सेवा प्रदाता',
+    'website': 'वेबसाइट',
+    'notifications': 'सूचना',
+    'reports': 'अहवाल',
+    'app_sharing': 'अॅप शेअरिंग',
+    'declaration': 'घोषणा',
+    'about': 'विषयी',
+    'monitoring': 'निरीक्षण',
+    'faults': 'दोष',
+    'support': 'आधार',
+    'account': 'खाते',
+  },
+  'ta': {
+    'view_profile': 'சுயவிவரத்தை பார்க்கவும்',
+    'account_security': 'கணக்கு மற்றும் பாதுகாப்பு',
+    'general': 'பொது',
+    'service_provider': 'என் சேவை வழங்குபவர்',
+    'website': 'இணையதளம்',
+    'notifications': 'அறிவிப்புகள்',
+    'reports': 'அறிக்கைகள்',
+    'app_sharing': 'பயன்பாடு பகிர்வு',
+    'declaration': 'அறிக்கை',
+    'about': 'பற்றி',
+    'monitoring': 'கண்காணிப்பு',
+    'faults': 'குறைபாடுகள்',
+    'support': 'ஆதரவு',
+    'account': 'கணக்கு',
+  }
 };

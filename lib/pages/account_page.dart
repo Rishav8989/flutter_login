@@ -1,5 +1,5 @@
-// lib/pages/account_page.dart
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:login/pages/accounts/about_page.dart';
 import 'package:login/pages/accounts/account_and_security_page.dart';
 import 'package:login/pages/accounts/application_sharing_page.dart';
@@ -9,7 +9,7 @@ import 'package:login/pages/accounts/my_service_provider_page.dart';
 import 'package:login/pages/accounts/notifications_page.dart';
 import 'package:login/pages/accounts/reports_page.dart';
 import 'package:login/pages/accounts/profile_page.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -17,14 +17,13 @@ class AccountPage extends StatelessWidget {
   Future<void> _launchWebsite(BuildContext context) async {
     final Uri url = Uri.parse('https://rishavwiki.netlify.app/');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
+      throw Exception('Could not launch'.tr);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Define a max width for desktop/larger screens
-    final double maxWidth = 600.0; // Adjust this value as needed
+    final double maxWidth = 600.0;
     final screenWidth = MediaQuery.of(context).size.width;
     final isDesktop = screenWidth > maxWidth;
 
@@ -34,11 +33,10 @@ class AccountPage extends StatelessWidget {
           constraints: BoxConstraints(
             maxWidth: isDesktop ? maxWidth : double.infinity,
           ),
-          child: Padding( // Outer Padding for the whole Account Page content
-            padding: const EdgeInsets.all(16.0), // Add padding here (adjust value as needed)
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: ListView(
               children: <Widget>[
-                // Profile Banner Section
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -67,7 +65,7 @@ class AccountPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              'Rishav',
+                              'Rishav'.tr,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -76,7 +74,7 @@ class AccountPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'View Profile',
+                              'view_profile'.tr,
                               style: TextStyle(
                                 color: Theme.of(context).disabledColor,
                               ),
@@ -89,134 +87,20 @@ class AccountPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
 
-                // Settings List
                 Card(
                   elevation: isDesktop ? 2 : 0,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
                   child: Column(
                     children: [
-                      ListTile(
-                        dense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        leading: Icon(Icons.security, color: Theme.of(context).iconTheme.color),
-                        title: Text('Account and Security', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const AccountAndSecurityPage()),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10), // Gap instead of Divider
-                      ListTile(
-                        dense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        leading: Icon(Icons.tune, color: Theme.of(context).iconTheme.color),
-                        title: Text('General', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const GeneralPage()),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10), // Gap instead of Divider
-                      ListTile(
-                        dense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        leading: Icon(Icons.settings_input_antenna, color: Theme.of(context).iconTheme.color),
-                        title: Text('My Service Provider', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const MyServiceProviderPage()),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10), // Gap instead of Divider
-                      ListTile(
-                        dense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        leading: Icon(Icons.web, color: Theme.of(context).iconTheme.color),
-                        title: Text('Website', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
-                        onTap: () {
-                          _launchWebsite(context); // Call _launchWebsite directly
-                        },
-                      ),
-                      const SizedBox(height: 10), // Gap instead of Divider
-                      ListTile(
-                        dense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        leading: Icon(Icons.notifications_active, color: Theme.of(context).iconTheme.color),
-                        title: Text('Notifications', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const NotificationsPage()),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10), // Gap instead of Divider
-                      ListTile(
-                        dense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        leading: Icon(Icons.insert_chart, color: Theme.of(context).iconTheme.color),
-                        title: Text('Reports', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const ReportsPage()),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10), // Gap instead of Divider
-                      ListTile(
-                        dense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        leading: Icon(Icons.share, color: Theme.of(context).iconTheme.color),
-                        title: Text('Application Sharing', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const ApplicationSharingPage()),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10), // Gap instead of Divider
-                      ListTile(
-                        dense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        leading: Icon(Icons.description, color: Theme.of(context).iconTheme.color),
-                        title: Text('Declaration', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const DeclarationPage()),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10), // Gap instead of Divider
-                      ListTile(
-                        dense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        leading: Icon(Icons.info_outline, color: Theme.of(context).iconTheme.color),
-                        title: Text('About', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
-                        trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const AboutPage()),
-                          );
-                        },
-                      ),
+                      _buildListTile(context, Icons.security, 'account_security'.tr, const AccountAndSecurityPage()),
+                      _buildListTile(context, Icons.tune, 'general'.tr, const GeneralPage()),
+                      _buildListTile(context, Icons.settings_input_antenna, 'service_provider'.tr, const MyServiceProviderPage()),
+                      _buildListTile(context, Icons.web, 'website'.tr, null, () => _launchWebsite(context)), // ✅ Fixed
+                      _buildListTile(context, Icons.notifications_active, 'notifications'.tr, const NotificationsPage()),
+                      _buildListTile(context, Icons.insert_chart, 'reports'.tr, const ReportsPage()),
+                      _buildListTile(context, Icons.share, 'app_sharing'.tr, const ApplicationSharingPage()),
+                      _buildListTile(context, Icons.description, 'declaration'.tr, const DeclarationPage()),
+                      _buildListTile(context, Icons.info_outline, 'about'.tr, const AboutPage()),
                     ],
                   ),
                 ),
@@ -225,6 +109,24 @@ class AccountPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  ListTile _buildListTile(BuildContext context, IconData icon, String title, Widget? page, [VoidCallback? onTap]) {
+    return ListTile(
+      dense: true,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      leading: Icon(icon, color: Theme.of(context).iconTheme.color),
+      title: Text(title, style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
+      trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
+      onTap: onTap ?? () {
+        if (page != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => page),
+          );
+        }
+      },
     );
   }
 }
