@@ -1,52 +1,89 @@
 // utils/theme_controller.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_theme.dart'; // Import your theme definitions
 
 enum AppTheme {
   light,
   dark,
-  amoled,
 }
 
 class ThemeController extends GetxController {
-  final _currentTheme = AppTheme.light.obs; // Start with light theme by default
+  final _currentTheme = AppTheme.light.obs;
+  late SharedPreferences _prefs;
+  final String _themeKey = 'app_theme';
+  bool _isThemeLoaded = false; // Track if theme is loaded
+
+  @override
+  void onInit() {
+    super.onInit();
+    // _loadThemeFromPreferences(); // No need to load here anymore, load in main.dart
+  }
+
+  // New function to load theme initially in main.dart  <-----  THIS IS THE IMPORTANT PART!
+  Future<void> loadInitialTheme() async {
+    await _loadThemeFromPreferences();
+    _isThemeLoaded = true; // Mark theme as loaded
+  }
 
   AppTheme get currentTheme => _currentTheme.value;
 
   ThemeMode get themeMode {
+    if (!_isThemeLoaded) {
+      return ThemeMode.system; // Or any default mode until theme is loaded
+    }
     switch (_currentTheme.value) {
       case AppTheme.light:
         return ThemeMode.light;
       case AppTheme.dark:
-      case AppTheme.amoled: // Treat both dark and amoled as dark modes for ThemeMode
         return ThemeMode.dark;
       default:
-        return ThemeMode.light; // Default to light if something goes wrong
+        return ThemeMode.light;
     }
   }
 
   ThemeData get themeData {
+    if (!_isThemeLoaded) {
+      return lightTheme; // Or any default theme until theme is loaded
+    }
     switch (_currentTheme.value) {
       case AppTheme.light:
         return lightTheme;
       case AppTheme.dark:
         return darkTheme;
-      case AppTheme.amoled:
-        return amoled;
       default:
-        return lightTheme; // Default to light if something goes wrong
+        return lightTheme;
     }
   }
 
-  void setTheme(AppTheme theme) {
+  Future<void> setTheme(AppTheme theme) async {
     _currentTheme.value = theme;
-    Get.changeTheme(themeData); // Update the app's theme using GetX
-    Get.changeThemeMode(themeMode); // Update the theme mode as well
+    Get.changeTheme(themeData);
+    Get.changeThemeMode(themeMode);
+    await _saveThemeToPreferences(theme);
   }
 
   void switchToLightTheme() => setTheme(AppTheme.light);
   void switchToDarkTheme() => setTheme(AppTheme.dark);
-  void switchToAmoledTheme() => setTheme(AppTheme.amoled);
+
+  Future<void> _loadThemeFromPreferences() async {
+    _prefs = await SharedPreferences.getInstance();
+    String? themeName = _prefs.getString(_themeKey);
+    if (themeName != null) {
+      try {
+        _currentTheme.value = AppTheme.values.byName(themeName);
+        Get.changeTheme(themeData);
+        Get.changeThemeMode(themeMode);
+      } catch (e) {
+        print('Error loading theme: $e');
+      }
+    }
+  }
+
+  Future<void> _saveThemeToPreferences(AppTheme theme) async {
+    _prefs = await SharedPreferences.getInstance();
+    await _prefs.setString(_themeKey, theme.name);
+  }
 }

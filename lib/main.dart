@@ -1,4 +1,4 @@
-// main.dart
+// main.dart (Correct Version - with pre-loading)
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,12 @@ import 'package:pocketbase/pocketbase.dart';
 
 final pb = PocketBase('https://first.pockethost.io/');
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final ThemeController themeController = Get.put(ThemeController());
+  await themeController.loadInitialTheme();
+
   runApp(const MyApp());
 }
 
@@ -18,13 +23,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.put(ThemeController());
+    final ThemeController themeController = Get.find<ThemeController>(); // **<-- Get.find<ThemeController>() used**
 
-    return Obx(() => GetMaterialApp( // Wrap GetMaterialApp with Obx
+    return Obx(() => GetMaterialApp(
       title: 'Flutter Notes App',
-      theme: themeController.themeData, // Use themeData from ThemeController
-      darkTheme: darkTheme, // You can still define a default darkTheme if needed for system mode
-      themeMode: themeController.themeMode, // Use themeMode from ThemeController
+      theme: themeController.themeData,
+      darkTheme: darkTheme,
+      themeMode: themeController.themeMode,
       debugShowCheckedModeBanner: false,
       home: const AuthCheck(),
     ));

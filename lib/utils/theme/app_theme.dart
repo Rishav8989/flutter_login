@@ -1,39 +1,5 @@
 import 'package:flutter/material.dart';
 
-ThemeData amoled = ThemeData.dark().copyWith(
-  // **AMOLED Theme - Pitch Black**
-  scaffoldBackgroundColor: Colors.black,
-  primaryColor: Colors.blue,
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.black,
-    titleTextStyle: TextStyle(
-      color: Colors.white, // White title text for max contrast on black
-    ),
-  ),
-  drawerTheme: const DrawerThemeData(
-    backgroundColor: Colors.black,
-  ),
-  textTheme: const TextTheme(
-    bodyMedium: TextStyle(color: Colors.white), // White text for max contrast on black
-    // You can customize other text styles here for AMOLED
-  ),
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: Colors.blue,
-    foregroundColor: Colors.white,
-  ),
-  iconTheme: const IconThemeData(color: Colors.white), // White icons for max contrast
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.blue,
-      foregroundColor: Colors.white,
-    ),
-  ),
-  colorScheme: ColorScheme.dark().copyWith( // Explicitly set surface and background for AMOLED
-    surface: Colors.black, // **AMOLED: Black surface color**
-    background: Colors.black, // **AMOLED: Black background color**
-  ),
-);
-
 
 ThemeData lightTheme = ThemeData(
   // **Light Theme - White and Blue**

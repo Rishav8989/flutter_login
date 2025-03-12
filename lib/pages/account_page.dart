@@ -8,11 +8,18 @@ import 'package:login/pages/accounts/general_page.dart';
 import 'package:login/pages/accounts/my_service_provider_page.dart';
 import 'package:login/pages/accounts/notifications_page.dart';
 import 'package:login/pages/accounts/reports_page.dart';
-import 'package:login/pages/accounts/website_page.dart';
 import 'package:login/pages/accounts/profile_page.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
+
+  Future<void> _launchWebsite(BuildContext context) async {
+    final Uri url = Uri.parse('https://rishavwiki.netlify.app/');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,10 +144,7 @@ class AccountPage extends StatelessWidget {
                         title: Text('Website', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
                         trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const WebsitePage()),
-                          );
+                          _launchWebsite(context); // Call _launchWebsite directly
                         },
                       ),
                       const SizedBox(height: 10), // Gap instead of Divider

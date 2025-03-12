@@ -40,6 +40,7 @@ dependencies:
   flutter_quill_extensions: ^11.0.0
   path: ^ 1.9.1
   get: ^4.7.2
+  url_launcher: ^6.3.1
 
 
 dev_dependencies:

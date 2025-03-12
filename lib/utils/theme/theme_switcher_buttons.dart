@@ -25,13 +25,6 @@ class ThemeSwitcherButtons extends StatelessWidget {
             themeController.switchToDarkTheme();
           },
         ),
-        IconButton(
-          icon: const Icon(Icons.nightlight_round),
-          tooltip: 'AMOLED Theme',
-          onPressed: () {
-            themeController.switchToAmoledTheme();
-          },
-        ),
       ],
     );
   }
