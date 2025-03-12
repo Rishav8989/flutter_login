@@ -1,13 +1,14 @@
 // home_page.dart
 import 'package:flutter/material.dart';
-
-import 'package:login/pages/account_page.dart'; // Import your page files from 'pages' folder
+import 'package:get/get.dart'; // Import GetX
+import 'package:login/utils/translation/locale_controller.dart';
+import 'package:login/widgets/bottom_navigation.dart'; // Import HomeBottomNavigation Widget
+import 'package:login/pages/account_page.dart'; // Import your page files from 'pages' folder (Correct paths!)
 import 'package:login/pages/faults_page.dart';
 import 'package:login/pages/monitoring_page.dart';
 import 'package:login/pages/support_page.dart';
-import 'package:login/utils/theme/theme_switcher_buttons.dart';
-import 'package:login/utils/auth/logout_button.dart'; // Import LogoutButton widget (corrected path)
-import 'package:login/my_drawer.dart'; // Import MyDrawer widget
+import 'package:login/widgets/home_app_bar_widget.dart'; // Import HomeAppBarWidget <--- IMPORT HERE
+// import 'package:login/my_drawer.dart'; // Import MyDrawer widget (Correct path!) <--- REMOVE or COMMENT THIS LINE
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,6 +25,22 @@ class _HomePageState extends State<HomePage> {
     SupportPage(),
     AccountPage(),
   ];
+  late LocaleController localeController; // Declare LocaleController
+
+  @override
+  void initState() {
+    super.initState();
+    print("HomePage initState: Checking if LocaleController is registered..."); // Debug print
+    try {
+      localeController = Get.find<LocaleController>();
+      print("HomePage initState: LocaleController FOUND!"); // Debug print if found
+    } catch (e) {
+      print("HomePage initState: LocaleController NOT FOUND! Error: $e"); // Debug print if not found
+      // Optionally, you could initialize with a default value in case of error (for testing):
+      // localeController = LocaleController(); // This might not be ideal in production but for debugging.
+      rethrow; // Re-throw the error so you still see the LateInitializationError
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -34,56 +51,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Solar Square', // Static App Name in AppBar
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          const ThemeSwitcherButtons(), // Theme Switcher Buttons in AppBar
-          const LogoutButton(),         // Logout Button in AppBar
-        ],
-        leading: Builder( // Add Drawer icon in the leading slot
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },
-        ),
-      ),
-      drawer: const MyDrawer(), // Add Drawer to the Scaffold
+      appBar: const HomeAppBarWidget(), // Use the HomeAppBarWidget  <--- USE HERE
+      // drawer: const MyDrawer(),  // <--- REMOVE or COMMENT THIS LINE (Drawer)
       body: IndexedStack( // Use IndexedStack for efficient page switching
         index: _selectedIndex,
         children: _pages,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.monitor_heart), // Choose appropriate icons
-            label: 'Monitoring',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Faults',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.support_agent),
-            label: 'Support',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue, // Customize selected item color
-        unselectedItemColor: Colors.grey, // Customize unselected item color
-        onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed, // To show labels for all items
+      bottomNavigationBar: HomeBottomNavigation( // HomeBottomNavigation Widget
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }
