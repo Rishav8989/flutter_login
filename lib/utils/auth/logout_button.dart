@@ -1,7 +1,7 @@
 // logout_button.dart
 import 'package:flutter/material.dart';
 import 'package:login/login_page.dart';
-import 'package:login/utils/logout_confirmation_dialog.dart';
+import 'package:login/utils/auth/logout_confirmation_dialog.dart';
 import 'package:login/main.dart';
 
 class LogoutButton extends StatelessWidget {

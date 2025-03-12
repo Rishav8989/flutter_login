@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login/registration_page.dart';
-import 'home_page.dart'; // Import HomePage
+import 'pages/home_page.dart'; // Import HomePage
 import 'main.dart'; // Import the global pb instance
 import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
 

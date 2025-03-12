@@ -1,7 +1,8 @@
 // home_page.dart
 import 'package:flutter/material.dart';
-import 'package:login/utils/logout_button.dart';
-import 'my_drawer.dart'; // Import the MyDrawer widget
+import 'package:login/my_drawer.dart';
+import 'package:login/utils/auth/logout_button.dart';
+import 'package:login/utils/theme/theme_switcher_buttons.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,10 +20,11 @@ class HomePage extends StatelessWidget {
           fontSize: 20,
         ),
         actions: <Widget>[
-          const LogoutButton(), // Use the separate LogoutButton widget
+          const ThemeSwitcherButtons(),
+          const LogoutButton(), // LogoutButton should now be correctly imported
         ],
       ),
-      drawer: const MyDrawer(), // Add the drawer property and use MyDrawer widget
+      drawer: const MyDrawer(),
       body: const Center(
         child: Text('Welcome to the Notes App!'),
       ),
