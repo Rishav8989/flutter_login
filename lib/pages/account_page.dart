@@ -39,10 +39,7 @@ class AccountPage extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ProfilePage()),
-                    );
+                    Get.to(() => const ProfilePage());
                   },
                   child: Container(
                     height: 120,
@@ -121,10 +118,7 @@ class AccountPage extends StatelessWidget {
       trailing: Icon(Icons.chevron_right, color: Theme.of(context).disabledColor),
       onTap: onTap ?? () {
         if (page != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => page),
-          );
+          Get.to(() => page);
         }
       },
     );
