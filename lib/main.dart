@@ -1,5 +1,3 @@
-// main.dart (Correct Version - with pre-loading)
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login/utils/auth/auth_check.dart';
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.find<ThemeController>(); // **<-- Get.find<ThemeController>() used**
+    final ThemeController themeController = Get.find<ThemeController>();
 
     return Obx(() => GetMaterialApp(
       title: 'Flutter Notes App',
