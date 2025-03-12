@@ -59,7 +59,7 @@ class AccountPage extends StatelessWidget {
                       children: <Widget>[
                         const CircleAvatar(
                           radius: 40,
-                          backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+                          backgroundImage: NetworkImage('https://rishavwiki.netlify.app/assets/1707189968207-01.jpeg'),
                         ),
                         const SizedBox(width: 20),
                         Column(
@@ -67,7 +67,7 @@ class AccountPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              'John Doe',
+                              'Rishav',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
