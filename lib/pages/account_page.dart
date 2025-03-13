@@ -10,6 +10,9 @@ import 'package:login/pages/accounts/notifications_page.dart';
 import 'package:login/pages/accounts/reports_page.dart';
 import 'package:login/pages/accounts/profile_page.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:login/login_page.dart'; // Import LoginPage
+import 'package:login/utils/auth/logout_confirmation_dialog.dart'; // Import LogoutConfirmationDialog
+import 'package:login/main.dart'; // Import pb (PocketBase instance)
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -18,6 +21,31 @@ class AccountPage extends StatelessWidget {
     final Uri url = Uri.parse('https://rishavwiki.netlify.app/');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch'.tr);
+    }
+  }
+
+  // Logout function using LogoutConfirmationDialog and LogoutButton logic
+  void _logout(BuildContext context) async {
+    // Use LogoutConfirmationDialog to get confirmation
+    bool? confirmLogout = await LogoutConfirmationDialog.show(context);
+
+    if (confirmLogout == true) {
+      pb.authStore.clear();
+      print('Logged out from AccountPage!');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    } else if (confirmLogout == false) {
+      print('Logout cancelled from AccountPage');
+      ScaffoldMessenger.of(context).showSnackBar( // Use the context from build method
+        const SnackBar(
+          content: Text('Logout cancelled'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      print('Logout dialog dismissed without choice (AccountPage)');
     }
   }
 
@@ -99,6 +127,26 @@ class AccountPage extends StatelessWidget {
                       _buildListTile(context, Icons.description, 'declaration'.tr, const DeclarationPage()),
                       _buildListTile(context, Icons.info_outline, 'about'.tr, const AboutPage()),
                     ],
+                  ),
+                ),
+                const SizedBox(height: 20), // Add some spacing before the button
+
+                // Logout Button with modified size
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: FractionallySizedBox( // Make button half width of parent (Padding)
+                    widthFactor: 0.3,
+                    child: SizedBox( // Set explicit height
+                      height: 50.0, // Double of a reasonable default height (e.g., 60)
+                      child: ElevatedButton(
+                        onPressed: () => _logout(context), // Call the logout function
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red, // Set button color to red
+                          foregroundColor: Colors.white, // Set text color to white
+                        ),
+                        child: Text('Logout'.tr), // Logout text - remember to translate
+                      ),
+                    ),
                   ),
                 ),
               ],

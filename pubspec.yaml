@@ -19,6 +19,15 @@ dependencies:
   get: ^4.7.2
   url_launcher: ^6.3.1
   google_fonts: ^6.2.1
+  flutter_native_splash: ^2.4.5
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/logo.png
+  android: true
+  ios: true
+  web: false
+  fullscreen: true 
 
 dev_dependencies:
   flutter_test:
