@@ -1,5 +1,3 @@
-// main.dart
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login/utils/auth/auth_check.dart';
@@ -9,11 +7,16 @@ import 'package:login/utils/theme/theme_controller.dart';
 import 'package:login/utils/translation/locale_controller.dart';
 import 'package:login/utils/translation/translation_service.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart'; // Import for FFI database
 
 final pb = PocketBase('https://first.pockethost.io/');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // ✅ Initialize sqflite for Linux, Windows, macOS
+  sqfliteFfiInit();  
+  databaseFactory = databaseFactoryFfi; // Important for desktop platforms
 
   final ThemeController themeController = Get.put(ThemeController());
   await themeController.loadInitialTheme();
@@ -32,16 +35,16 @@ class MyApp extends StatelessWidget {
     final LocaleController localeController = Get.find<LocaleController>();
 
     return Obx(() => GetMaterialApp(
-      title: 'Flutter Notes App'.tr,
-      translations: TranslationService(),
-      locale: localeController.currentLocale,
-      fallbackLocale: TranslationService.fallbackLocale,
-      theme: themeController.themeData,
-      darkTheme: darkTheme,
-      themeMode: themeController.themeMode,
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreenWrapper(), // Use SplashScreenWrapper as home
-    ));
+          title: 'Solar'.tr,
+          translations: TranslationService(),
+          locale: localeController.currentLocale,
+          fallbackLocale: TranslationService.fallbackLocale,
+          theme: themeController.themeData,
+          darkTheme: darkTheme,
+          themeMode: themeController.themeMode,
+          debugShowCheckedModeBanner: false,
+          home: const SplashScreenWrapper(),
+        ));
   }
 }
 
@@ -53,24 +56,22 @@ class SplashScreenWrapper extends StatefulWidget {
 }
 
 class _SplashScreenWrapperState extends State<SplashScreenWrapper> {
-  bool _loading = true; // Track loading state, initially true
+  bool _loading = true;
 
   @override
   void initState() {
     super.initState();
-    _removeSplashScreen(); // Call function to remove splash screen immediately
+    _removeSplashScreen();
   }
 
   void _removeSplashScreen() {
     setState(() {
-      _loading = false; // Set loading to false immediately to remove splash screen
+      _loading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return _loading
-        ? const SplashScreen() // Show SplashScreen while loading (initially)
-        : const AuthCheck();   // Show AuthCheck when not loading (immediately after build)
+    return _loading ? const SplashScreen() : const AuthCheck();
   }
 }
