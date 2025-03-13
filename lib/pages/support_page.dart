@@ -1,6 +1,15 @@
 // lib/support_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // If you are using GetX for translations
+import 'package:login/pages/support/faqs_page.dart';
+import 'package:login/pages/support/feedback_page.dart';
+import 'package:login/pages/support/firmware_download_page.dart';
+import 'package:login/pages/support/live_data_page.dart';
+import 'package:login/pages/support/user_manual_page.dart';
+import 'package:login/pages/support/video_tutorial_page.dart';
+import 'package:login/pages/support/wlan_configuration_page.dart';
+import 'package:login/pages/support/local_access.dart';
+
 
 class SupportPage extends StatelessWidget {
   const SupportPage({super.key});
@@ -37,7 +46,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.settings_input_antenna,
                   text: 'Local Access'.tr,
                   onTap: () {
-                    print('Local Access Tapped');
+                    Get.to(() => const LocalAccess());
                   },
                 ),
                 _buildSupportCard(
@@ -45,7 +54,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.wifi,
                   text: 'WLAN Configuration'.tr,
                   onTap: () {
-                    print('WLAN Configuration Tapped');
+                    Get.to(() => const WLANConfigurationPage());
                   },
                 ),
                 _buildSupportCard(
@@ -53,7 +62,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.download,
                   text: 'Firmware Download'.tr,
                   onTap: () {
-                    print('Firmware Download Tapped');
+                    Get.to(() => const FirmwareDownloadPage());
                   },
                 ),
 
@@ -64,7 +73,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.access_time,
                   text: 'Live Data'.tr,
                   onTap: () {
-                    print('Live Data Tapped');
+                    Get.to(() => const LiveDataPage());
                   },
                 ),
 
@@ -75,7 +84,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.feedback,
                   text: 'Feedback'.tr,
                   onTap: () {
-                    print('Feedback Tapped');
+                    Get.to(() => const FeedbackPage());
                   },
                 ),
                 _buildSupportCard(
@@ -83,7 +92,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.play_arrow,
                   text: 'Video Tutorial'.tr,
                   onTap: () {
-                    print('Video Tutorial Tapped');
+                    Get.to(() => const VideoTutorialPage());
                   },
                 ),
                 _buildSupportCard(
@@ -91,7 +100,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.book,
                   text: 'User Manual'.tr,
                   onTap: () {
-                    print('User Manual Tapped');
+                    Get.to(() => const UserManualPage());
                   },
                 ),
                 _buildSupportCard(
@@ -99,7 +108,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.question_answer,
                   text: 'FAQs'.tr,
                   onTap: () {
-                    print('FAQs Tapped');
+                    Get.to(() => const FAQsPage());
                   },
                 ),
               ],
