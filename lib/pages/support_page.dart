@@ -1,6 +1,7 @@
 // lib/support_page.dart
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // If you are using GetX for translations
+import 'package:get/get.dart';
+import 'package:login/pages/support/chat_page.dart';
 import 'package:login/pages/support/faqs_page.dart';
 import 'package:login/pages/support/feedback_page.dart';
 import 'package:login/pages/support/firmware_download_page.dart';
@@ -22,14 +23,6 @@ class SupportPage extends StatelessWidget {
     final isDesktop = screenWidth > maxWidth; // Determine desktop layout
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Support'.tr),
-        centerTitle: true,
-        backgroundColor: theme.appBarTheme.backgroundColor,
-        foregroundColor: theme.appBarTheme.foregroundColor,
-        titleTextStyle: theme.appBarTheme.titleTextStyle,
-        elevation: 0,
-      ),
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Center( // Center the content
         child: ConstrainedBox( // Apply maxWidth constraint
@@ -79,6 +72,12 @@ class SupportPage extends StatelessWidget {
 
                 const SizedBox(height: 20.0),
                 _buildSectionHeader(context, 'Help Center'.tr),
+                _buildSupportCard(
+                  context: context,
+                  icon: Icons.chat, // Or another appropriate icon
+                  text: 'Chat with us'.tr,
+                  onTap: () {
+                    Get.to(() => const ChatPage());}),
                 _buildSupportCard(
                   context: context,
                   icon: Icons.feedback,

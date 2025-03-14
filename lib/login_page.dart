@@ -13,8 +13,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController(text: 'rishav@gmail.com'); // Default email
-  final _passwordController = TextEditingController(text: '123123123'); // Default password
+  final _emailController = TextEditingController(text: 'temp@mail.com'); // Default email
+  final _passwordController = TextEditingController(text: 'Temp@mail'); // Default password
   String? _errorMessage;
   bool _isLoading = false;
 
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your email or username';
+                          return 'Please enter your email';
                         }
                         return null;
                       },
