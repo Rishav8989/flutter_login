@@ -5,7 +5,6 @@ import 'package:login/pages/support/chat_page.dart';
 import 'package:login/pages/support/faqs_page.dart';
 import 'package:login/pages/support/feedback_page.dart';
 import 'package:login/pages/support/firmware_download_page.dart';
-import 'package:login/pages/support/live_data_page.dart';
 import 'package:login/pages/support/user_manual_page.dart';
 import 'package:login/pages/support/video_tutorial_page.dart';
 import 'package:login/pages/support/wlan_configuration_page.dart';
@@ -56,17 +55,6 @@ class SupportPage extends StatelessWidget {
                   text: 'Firmware Download'.tr,
                   onTap: () {
                     Get.to(() => const FirmwareDownloadPage());
-                  },
-                ),
-
-                const SizedBox(height: 20.0),
-                _buildSectionHeader(context, 'Value-added Services'.tr),
-                _buildSupportCard(
-                  context: context,
-                  icon: Icons.access_time,
-                  text: 'Live Data'.tr,
-                  onTap: () {
-                    Get.to(() => const LiveDataPage());
                   },
                 ),
 
