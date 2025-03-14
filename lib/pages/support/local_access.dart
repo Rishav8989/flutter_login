@@ -4,7 +4,6 @@ import 'dart:io' show Platform;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/services.dart'; // For Clipboard
 
-
 class LocalAccess extends StatefulWidget {
   const LocalAccess({super.key});
 
@@ -17,6 +16,7 @@ class _LocalAccessState extends State<LocalAccess> {
   String? scannedData;
   bool cameraPermissionGranted = false;
   bool qrCodeNotFound = true; // To control "QR code not found" text visibility
+  bool isTorchOn = false; // To control torch state
 
   @override
   void initState() {
@@ -108,8 +108,8 @@ class _LocalAccessState extends State<LocalAccess> {
               child: Container(
                 decoration: ShapeDecoration(
                   shape: QrScannerOverlayShape(
-                    borderColor: Colors.white, // White border
-                    borderRadius: 10,
+                    borderColor: Colors.grey[300]!, // Light grey border
+                    borderRadius: 20, // Rounded corners
                     borderLength: 20,
                     borderWidth: 5,
                     cutOutSize: MediaQuery.of(context).size.width * 0.6, // Adjust size as needed
@@ -171,6 +171,23 @@ class _LocalAccessState extends State<LocalAccess> {
                 Navigator.of(context).pop(); // Use Navigator.pop to go back
               },
               child: const Text('Manual Connection'),
+            ),
+          ),
+          Positioned( // Torch toggle button
+            bottom: 200, // Position below the central rectangle
+            left: MediaQuery.of(context).size.width / 2 - 30, // Center horizontally
+            child: FloatingActionButton(
+              onPressed: () {
+                setState(() {
+                  isTorchOn = !isTorchOn; // Toggle torch state
+                  cameraController.toggleTorch(); // Toggle the torch
+                });
+              },
+              child: Icon(
+                isTorchOn ? Icons.flash_on : Icons.flash_off,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.blue, // System blue color
             ),
           ),
         ],
@@ -300,51 +317,51 @@ class QrScannerOverlayShape extends ShapeBorder {
     return path;
   }
 
-@override
-void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
-  final paint = Paint()
-    ..color = borderColor
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = borderWidth;
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
+    final paint = Paint()
+      ..color = borderColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = borderWidth;
 
-  final borderRect = Rect.fromCenter(
-    center: rect.center.translate(0, cutOutBottomOffset),
-    width: cutOutSize - borderWidth / 2,
-    height: cutOutSize - borderWidth / 2,
-  );
+    final borderRect = Rect.fromCenter(
+      center: rect.center.translate(0, cutOutBottomOffset),
+      width: cutOutSize - borderWidth / 2,
+      height: cutOutSize - borderWidth / 2,
+    );
 
-  // 1. Draw the Darker Outer Area
-  canvas.drawPath(
-    getOuterPath(rect),
-    Paint()
-      ..color = Colors.black.withOpacity(0.8) // Darken outside scan area
-      ..style = PaintingStyle.fill,
-  );
+    // 1. Draw the Lighter Outer Area
+    canvas.drawPath(
+      getOuterPath(rect),
+      Paint()
+        ..color = Colors.grey[300]!.withOpacity(0.5) // Light grey outer area
+        ..style = PaintingStyle.fill,
+    );
 
-  // 2. Draw the Lighter Inner Area
-  final cutoutPaint = Paint()
-    ..color = Colors.white.withOpacity(0.2) // Lighter, more transparent white
-    ..style = PaintingStyle.fill;
-  final cutOutRectForInner = Rect.fromCenter(
-    center: rect.center.translate(0, cutOutBottomOffset),
-    width: cutOutSize,
-    height: cutOutSize,
-  );
-  canvas.drawRect(cutOutRectForInner, cutoutPaint); 
+    // 2. Draw the Transparent Inner Area
+    final cutOutPaint = Paint()
+      ..color = Colors.transparent // Fully transparent inner area
+      ..style = PaintingStyle.fill;
+    final cutOutRectForInner = Rect.fromCenter(
+      center: rect.center.translate(0, cutOutBottomOffset),
+      width: cutOutSize,
+      height: cutOutSize,
+    );
+    canvas.drawRect(cutOutRectForInner, cutOutPaint); 
 
-  // 3. Draw White Corners (Borders) 
-  canvas.drawLine(borderRect.topLeft, borderRect.topLeft + Offset(borderLength, 0), paint);
-  canvas.drawLine(borderRect.topLeft, borderRect.topLeft + Offset(0, borderLength), paint);
+    // 3. Draw White Corners (Borders) 
+    canvas.drawLine(borderRect.topLeft, borderRect.topLeft + Offset(borderLength, 0), paint);
+    canvas.drawLine(borderRect.topLeft, borderRect.topLeft + Offset(0, borderLength), paint);
 
-  canvas.drawLine(borderRect.topRight, borderRect.topRight + Offset(-borderLength, 0), paint);
-  canvas.drawLine(borderRect.topRight, borderRect.topRight + Offset(0, borderLength), paint);
+    canvas.drawLine(borderRect.topRight, borderRect.topRight + Offset(-borderLength, 0), paint);
+    canvas.drawLine(borderRect.topRight, borderRect.topRight + Offset(0, borderLength), paint);
 
-  canvas.drawLine(borderRect.bottomLeft, borderRect.bottomLeft + Offset(borderLength, 0), paint);
-  canvas.drawLine(borderRect.bottomLeft, borderRect.bottomLeft + Offset(0, -borderLength), paint);
+    canvas.drawLine(borderRect.bottomLeft, borderRect.bottomLeft + Offset(borderLength, 0), paint);
+    canvas.drawLine(borderRect.bottomLeft, borderRect.bottomLeft + Offset(0, -borderLength), paint);
 
-  canvas.drawLine(borderRect.bottomRight, borderRect.bottomRight + Offset(-borderLength, 0), paint);
-  canvas.drawLine(borderRect.bottomRight, borderRect.bottomRight + Offset(0, -borderLength), paint);
-}
+    canvas.drawLine(borderRect.bottomRight, borderRect.bottomRight + Offset(-borderLength, 0), paint);
+    canvas.drawLine(borderRect.bottomRight, borderRect.bottomRight + Offset(0, -borderLength), paint);
+  }
 
   @override
   ShapeBorder scale(double t) {
