@@ -63,7 +63,7 @@ class _LocalAccessState extends State<LocalAccess> {
           child: Padding(
             padding: EdgeInsets.all(20.0),
             child: Text(
-              'Camera permission not granted.\nPlease enable camera permission in app settings to use the QR Scanner.',
+              'Camera permission not granted. Please enable camera permission in app settings to use the QR Scanner.',
               textAlign: TextAlign.center,
             ),
           ),
