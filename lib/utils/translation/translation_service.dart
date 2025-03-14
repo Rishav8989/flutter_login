@@ -50,6 +50,7 @@ final Map<String, Map<String, String>> translations = {
     'Monitoring': 'Monitoring', // Bottom Navigation Label - Added again for clarity
     'Faults': 'Faults',        // Bottom Navigation Label - Added again for clarity
     'Support': 'Support',       // Bottom Navigation Label - Added again for clarity - already present, but added for completeness
+    'Chat with us': 'Chat with us',
   },
   'hi': {
     'view_profile': 'प्रोफ़ाइल देखें',
@@ -84,6 +85,7 @@ final Map<String, Map<String, String>> translations = {
     'Faults': 'दोष',        // Bottom Navigation Label
     'Support': 'समर्थन',       // Bottom Navigation Label
     'Account': 'खाता',       // Bottom Navigation Label
+    'Chat with us': 'हमसे चैट करें',
   },
   'bn': {
     'view_profile': 'প্রোফাইল দেখুন',
@@ -118,6 +120,7 @@ final Map<String, Map<String, String>> translations = {
     'Faults': 'ত্রুটি',        // Bottom Navigation Label
     'Support': 'সহায়তা',       // Bottom Navigation Label
     'Account': 'অ্যাকাউন্ট',       // Bottom Navigation Label
+    'Chat with us': 'আমাদের সাথে চ্যাট করুন',
   },
   'te': {
     'view_profile': 'ప్రొఫైల్ చూడండి',
@@ -152,6 +155,7 @@ final Map<String, Map<String, String>> translations = {
     'Faults': 'లోపాలు',        // Bottom Navigation Label
     'Support': 'మద్దతు',       // Bottom Navigation Label
     'Account': 'ఖాతా',       // Bottom Navigation Label
+    'Chat with us': 'మాతో చాట్ చేయండి',
   },
   'mr': {
     'view_profile': 'प्रोफाइल पहा',
@@ -186,6 +190,7 @@ final Map<String, Map<String, String>> translations = {
     'Faults': 'दोष',        // Bottom Navigation Label
     'Support': 'आधार',       // Bottom Navigation Label
     'Account': 'खाते',       // Bottom Navigation Label
+    'Chat with us': 'आमच्याशी चॅट करा',
   },
   'ta': {
     'view_profile': 'சுயவிவரத்தை பார்க்கவும்',
@@ -220,5 +225,6 @@ final Map<String, Map<String, String>> translations = {
     'Faults': 'குறைபாடுகள்',        // Bottom Navigation Label
     'Support': 'ஆதரவு',       // Bottom Navigation Label
     'Account': 'கணக்கு',       // Bottom Navigation Label
+    'Chat with us': 'எங்களுடன் அரட்டை அடிக்கவும்',
   }
 };
