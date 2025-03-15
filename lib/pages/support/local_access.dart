@@ -17,11 +17,23 @@ class _LocalAccessState extends State<LocalAccess> {
   bool cameraPermissionGranted = false;
   bool qrCodeNotFound = true; // To control "QR code not found" text visibility
   bool isTorchOn = false; // To control torch state
+  bool isSupportedPlatform = true; // Flag to check if the platform is supported
 
   @override
   void initState() {
     super.initState();
-    _getCameraPermission();
+    _checkPlatform();
+    if (isSupportedPlatform) {
+      _getCameraPermission();
+    }
+  }
+
+  void _checkPlatform() {
+    if (!Platform.isAndroid && !Platform.isIOS) {
+      isSupportedPlatform = false;
+    } else {
+      isSupportedPlatform = true;
+    }
   }
 
   Future<void> _getCameraPermission() async {
@@ -32,7 +44,7 @@ class _LocalAccessState extends State<LocalAccess> {
         return;
       }
     } else {
-      cameraPermissionGranted = true;
+      cameraPermissionGranted = true; // For other platforms, assume permission is granted or not needed
     }
     setState(() {});
   }
@@ -49,6 +61,29 @@ class _LocalAccessState extends State<LocalAccess> {
 
   @override
   Widget build(BuildContext context) {
+    if (!isSupportedPlatform) {
+      return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: const Text(''), // No title in the center
+          centerTitle: false, // Ensure title is not centered
+        ),
+        body: const Center(
+          child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text(
+              'This application feature is only supported on Android and iOS devices.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ),
+      );
+    }
+
     if (!cameraPermissionGranted) {
       return Scaffold(
         appBar: AppBar(
@@ -347,9 +382,9 @@ class QrScannerOverlayShape extends ShapeBorder {
       width: cutOutSize,
       height: cutOutSize,
     );
-    canvas.drawRect(cutOutRectForInner, cutOutPaint); 
+    canvas.drawRect(cutOutRectForInner, cutOutPaint);
 
-    // 3. Draw White Corners (Borders) 
+    // 3. Draw White Corners (Borders)
     canvas.drawLine(borderRect.topLeft, borderRect.topLeft + Offset(borderLength, 0), paint);
     canvas.drawLine(borderRect.topLeft, borderRect.topLeft + Offset(0, borderLength), paint);
 
