@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
 class MonitoringPage extends StatefulWidget {
   const MonitoringPage({super.key});
@@ -149,7 +150,7 @@ class _MonitoringPageState extends State<MonitoringPage> {
                         children: [
                           const Text(
                             'Ambient Temperature',
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 14), selectionColor: Colors.blue,
                           ),
                           const SizedBox(width: 10),
                           Transform.scale(
