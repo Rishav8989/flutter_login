@@ -14,8 +14,15 @@ import 'package:flutter/material.dart';
 
 class ChatController extends GetxController {
   RxList<types.Message> messages = <types.Message>[].obs;
-  final user = const types.User( // Changed from _user to user (public)
-    id: '82091008-a484-4a89-ae75-a22bf8d6f3ac',
+
+  static const String geminiApiKey = 'AIzaSyB-2knGpTsjjnYKnhitFCb2yamKoXWqiSI';
+
+  final user = const types.User(
+    id: '82091008-a484-4a89-ae75-a22bf8d6f3ac', // Your user ID
+  );
+  final botUser = const types.User( // Define a user for the bot
+    id: 'gemini-bot', // Unique ID for the bot
+    firstName: 'Solar Asist', // Bot's name
   );
 
   @override
@@ -205,15 +212,98 @@ class ChatController extends GetxController {
     messages.refresh(); // Trigger UI update for RxList
   }
 
-  void handleSendPressed(types.PartialText message) {
+  Future<void> handleSendPressed(types.PartialText message) async { // Make it async
     final textMessage = types.TextMessage(
-      author: user, // Using public 'user'
+      author: user,
       createdAt: DateTime.now().millisecondsSinceEpoch,
       id: const Uuid().v4(),
       text: message.text,
     );
-    addMessage(textMessage);
+    addMessage(textMessage); // Add user's message immediately
+
+    // *** Call Gemini API here ***
+    try {
+      final botResponse = await sendMessageToGemini(message.text);
+      if (botResponse != null && botResponse.isNotEmpty) {
+        final botTextMessage = types.TextMessage(
+          author: botUser, // Use the botUser we defined
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          id: const Uuid().v4(),
+          text: botResponse,
+        );
+        addMessage(botTextMessage); // Add bot's message to the chat
+      } else {
+        // Handle case where Gemini API returns no response or an error
+        print('Gemini API returned empty or error response.');
+        // Optionally show an error message to the user in the chat
+        final errorMessage = types.TextMessage(
+          author: botUser,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          id: const Uuid().v4(),
+          text: 'Sorry, I encountered an error or didn\'t have a response.',
+        );
+        addMessage(errorMessage);
+      }
+    } catch (e) {
+      print('Error calling Gemini API: $e');
+      // Optionally show an error message to the user in the chat
+      final errorMessage = types.TextMessage(
+        author: botUser,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        text: 'Sorry, I couldn\'t connect to the AI service.',
+        );
+      addMessage(errorMessage);
+    }
   }
+
+  // *** New function to send message to Gemini API (Using gemini-2.0-flash as requested) ***
+  Future<String?> sendMessageToGemini(String message) async {
+    const geminiApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'; // Gemini Flash API Endpoint (v1beta)
+    final apiKey = geminiApiKey; // Use your API key
+
+
+    try {
+      final response = await http.post(
+        Uri.parse('${geminiApiUrl}?key=$apiKey'), // Append API key as query parameter
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'contents': [
+            {
+              'parts': [
+                {'text': message}
+              ]
+            }
+          ]
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        // Gemini API response structure might vary slightly, adjust accordingly.
+        // This assumes a simple text response in 'candidates[0].content.parts[0].text'
+        if (responseData['candidates'] != null &&
+            responseData['candidates'].isNotEmpty &&
+            responseData['candidates'][0]['content'] != null &&
+            responseData['candidates'][0]['content']['parts'] != null &&
+            responseData['candidates'][0]['content']['parts'].isNotEmpty) {
+          return responseData['candidates'][0]['content']['parts'][0]['text'] as String?;
+        } else {
+          print('Gemini API response structure unexpected: $responseData');
+          print('Full Gemini API Response Body (Unexpected Structure): ${response.body}'); // Print full body for inspection
+          return null; // Or handle differently
+        }
+      } else {
+        print('Gemini API error - Status Code: ${response.statusCode}');
+        print('Full Gemini API Response Body (Error): ${response.body}'); // Print full body for inspection
+        return null; // Or handle differently
+      }
+    } catch (e) {
+      print('Error sending message to Gemini API: $e');
+      return null; // Or handle differently
+    }
+  }
+
 
   Future<void> loadMessages() async {
     try {

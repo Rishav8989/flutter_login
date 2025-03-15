@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login/utils/auth/auth_check.dart';
 import 'package:login/utils/splash_screen.dart';
-import 'package:login/utils/theme/app_theme.dart';
 import 'package:login/utils/theme/theme_controller.dart';
 import 'package:login/utils/translation/locale_controller.dart';
 import 'package:login/utils/translation/translation_service.dart';

@@ -20,7 +20,10 @@ class ChatPage extends StatelessWidget {
             actions: [
               IconButton(
                 icon: const Icon(Icons.delete),
-                onPressed: controller.deleteMessages,
+                onPressed: () {
+                  // Show confirmation dialog before deleting messages
+                  _showDeleteConfirmationDialog(context, controller);
+                },
                 tooltip: 'Delete all messages',
               ),
             ],
@@ -56,6 +59,42 @@ class ChatPage extends StatelessWidget {
                   )),
             ),
           ),
+        );
+      },
+    );
+  }
+
+  // Function to show a confirmation dialog before deleting messages
+  Future<void> _showDeleteConfirmationDialog(BuildContext context, ChatController controller) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // User must tap a button to close dialog
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Confirm Delete'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Are you sure you want to delete all messages?'),
+                Text('This action cannot be undone.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Yes, Delete'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(); // Close the dialog
+                controller.deleteMessages(); // Call the delete function
+              },
+            ),
+          ],
         );
       },
     );
