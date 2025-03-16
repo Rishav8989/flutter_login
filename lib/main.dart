@@ -6,6 +6,10 @@ import 'package:login/utils/theme/theme_controller.dart';
 import 'package:login/utils/translation/locale_controller.dart';
 import 'package:login/utils/translation/translation_service.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'dart:io';
+
+
 
 final pb = PocketBase('https://first.pockethost.io/');
 
@@ -16,6 +20,11 @@ void main() async {
   await themeController.loadInitialTheme();
 
   final localeController = Get.put(LocaleController());
+  
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
 
   runApp(const MyApp());
 }
