@@ -6,16 +6,6 @@ class SoftwareAdviceTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Feedback'),
-        leading: const BackButton(),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: () {},
-          ),
-        ],
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
