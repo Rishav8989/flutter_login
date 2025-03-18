@@ -8,13 +8,15 @@ import 'package:login/utils/translation/translation_service.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // Add this import
 
-
-
-final pb = PocketBase('https://first.pockethost.io/');
+late PocketBase pb; // Declare pb as late
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Load environment variables
+  await dotenv.load(fileName: ".env");
   
   final themeController = Get.put(ThemeController());
   await themeController.loadInitialTheme();
@@ -26,6 +28,9 @@ void main() async {
     databaseFactory = databaseFactoryFfi;
   }
 
+  // Initialize PocketBase after loading environment variables
+  pb = PocketBase(dotenv.env['POCKETBASE_URL'] ?? 'https://default.url'); // Add a fallback URL
+  
   runApp(const MyApp());
 }
 
