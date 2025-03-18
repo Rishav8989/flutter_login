@@ -11,11 +11,12 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // Add this import
 
 class ChatController extends GetxController {
   RxList<types.Message> messages = <types.Message>[].obs;
 
-  static const String geminiApiKey = 'AIzaSyB-2knGpTsjjnYKnhitFCb2yamKoXWqiSI';
+  String get geminiApiKey => dotenv.env['GEMINI_API_KEY'] ?? '';
 
   final user = const types.User(
     id: '82091008-a484-4a89-ae75-a22bf8d6f3ac', // Your user ID
