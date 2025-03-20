@@ -17,7 +17,7 @@ class SupportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final double maxWidth = 600.0; // Define maxWidth, same as AccountPage
+    const double maxWidth = 600.0; // Define maxWidth, same as AccountPage
     final screenWidth = MediaQuery.of(context).size.width;
     final isDesktop = screenWidth > maxWidth; // Determine desktop layout
 
@@ -38,7 +38,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.settings_input_antenna,
                   text: 'Local Access'.tr,
                   onTap: () {
-                    Get.to(() => const LocalAccess());
+                    Get.to(() => LocalAccess()); // Removed const here
                   },
                 ),
                 _buildSupportCard(
@@ -65,7 +65,8 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.chat, // Or another appropriate icon
                   text: 'Chat with us'.tr,
                   onTap: () {
-                    Get.to(() => const ChatPage());}),
+                    Get.to(() => const ChatPage());
+                  }),
                 _buildSupportCard(
                   context: context,
                   icon: Icons.feedback,
@@ -149,7 +150,7 @@ class SupportPage extends StatelessWidget {
                     style: theme.textTheme.bodyMedium,
                   ),
                 ),
-                Icon(Icons.chevron_right, color: theme.disabledColor, size: 20,),
+                Icon(Icons.chevron_right, color: theme.disabledColor, size: 20,), // Removed const here
               ],
             ),
           ),

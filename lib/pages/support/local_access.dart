@@ -3,50 +3,42 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'dart:io' show Platform;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/services.dart'; // For Clipboard
+import 'package:get/get.dart';
 
-class LocalAccess extends StatefulWidget {
-  const LocalAccess({super.key});
-
-  @override
-  State<LocalAccess> createState() => _LocalAccessState();
-}
-
-class _LocalAccessState extends State<LocalAccess> {
-  MobileScannerController cameraController = MobileScannerController();
-  String? scannedData;
-  bool cameraPermissionGranted = false;
-  bool qrCodeNotFound = true; // To control "QR code not found" text visibility
-  bool isTorchOn = false; // To control torch state
-  bool isSupportedPlatform = true; // Flag to check if the platform is supported
+class LocalAccessController extends GetxController {
+  final cameraController = MobileScannerController();
+  final scannedData = Rxn<String>();
+  final cameraPermissionGranted = false.obs;
+  final qrCodeNotFound = true.obs;
+  final isTorchOn = false.obs;
+  final isSupportedPlatform = true.obs;
 
   @override
-  void initState() {
-    super.initState();
+  void onInit() {
+    super.onInit();
     _checkPlatform();
-    if (isSupportedPlatform) {
+    if (isSupportedPlatform.value) {
       _getCameraPermission();
     }
   }
 
   void _checkPlatform() {
     if (!Platform.isAndroid && !Platform.isIOS) {
-      isSupportedPlatform = false;
+      isSupportedPlatform.value = false;
     } else {
-      isSupportedPlatform = true;
+      isSupportedPlatform.value = true;
     }
   }
 
   Future<void> _getCameraPermission() async {
     if (Platform.isAndroid || Platform.isIOS) {
-      cameraPermissionGranted = await _requestCameraPermission();
-      if (!cameraPermissionGranted) {
-        setState(() {});
+      cameraPermissionGranted.value = await _requestCameraPermission();
+      if (!cameraPermissionGranted.value) {
         return;
       }
     } else {
-      cameraPermissionGranted = true; // For other platforms, assume permission is granted or not needed
+      cameraPermissionGranted.value = true; // For other platforms, assume permission is granted or not needed
     }
-    setState(() {});
   }
 
   Future<bool> _requestCameraPermission() async {
@@ -59,222 +51,223 @@ class _LocalAccessState extends State<LocalAccess> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    if (!isSupportedPlatform) {
-      return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: const Text(''), // No title in the center
-          centerTitle: false, // Ensure title is not centered
-        ),
-        body: const Center(
-          child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              'This application feature is only supported on Android and iOS devices.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-        ),
-      );
+  void onDetect(BarcodeCapture capture) {
+    final List<Barcode> barcodes = capture.barcodes;
+    if (barcodes.isNotEmpty) {
+      scannedData.value = barcodes.first.rawValue;
+      qrCodeNotFound.value = false;
+      cameraController.stop();
+      _showScannedDataDialog(barcodes.first.rawValue);
+    } else {
+      qrCodeNotFound.value = true;
     }
+  }
 
-    if (!cameraPermissionGranted) {
-      return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: const Text(''), // No title in the center
-          centerTitle: false, // Ensure title is not centered
-        ),
-        body: const Center(
-          child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              'Camera permission not granted. Please enable camera permission in app settings to use the QR Scanner.',
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      );
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: const Text(''), // No title in the center
-        centerTitle: false, // Ensure title is not centered
-        backgroundColor: Colors.grey[900], // Darker AppBar background
-        foregroundColor: Colors.white, // White text and icons in AppBar
-      ),
-      body: Stack( // Use Stack to overlay text and scanner
-        children: [
-          MobileScanner(
-            controller: cameraController,
-            fit: BoxFit.cover, // Cover the whole screen
-            onDetect: (capture) {
-              final List<Barcode> barcodes = capture.barcodes;
-              if (barcodes.isNotEmpty) {
-                setState(() {
-                  scannedData = barcodes.first.rawValue;
-                  qrCodeNotFound = false; // Hide "QR code not found"
-                });
-                cameraController.stop(); // Stop scanning after first detection
-                _showScannedDataDialog(barcodes.first.rawValue); // Show dialog
-              } else {
-                setState(() {
-                  qrCodeNotFound = true; // Show "QR code not found"
-                });
-              }
-            },
-          ),
-          Positioned.fill( // Overlay for scan area
-            child: IgnorePointer( // Make it non-interactive
-              child: Container(
-                decoration: ShapeDecoration(
-                  shape: QrScannerOverlayShape(
-                    borderColor: Colors.grey[300]!, // Light grey border
-                    borderRadius: 20, // Rounded corners
-                    borderLength: 20,
-                    borderWidth: 5,
-                    cutOutSize: MediaQuery.of(context).size.width * 0.6, // Adjust size as needed
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned( // "SCAN TO CONNECT" text
-            top: 20,
-            left: 20,
-            right: 20,
-            child: Text(
-              'SCAN TO CONNECT',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Positioned( // Instruction text
-            top: 60,
-            left: 20,
-            right: 20,
-            child: Text(
-              'Scan the QR code on the device to connect the device.\nIf there is no QR code or the code cannot be identified,\nplease tap “Manual Connection”.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
-            ),
-          ),
-          if (qrCodeNotFound) // "QR code not found" text - Conditionally displayed
-            Positioned(
-              bottom: 100,
-              left: 20,
-              right: 20,
-              child: Center(
-                child: Text(
-                  'QR code not found',
-                  style: TextStyle(
-                    color: Colors.blue[300], // Blue color as in image
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          Positioned( // "Manual Connection" button
-            bottom: 20,
-            left: 20,
-            right: 20,
-            child: ElevatedButton(
-              onPressed: () {
-                // Navigate back on Manual Connection
-                Navigator.of(context).pop(); // Use Navigator.pop to go back
-              },
-              child: const Text('Manual Connection'),
-            ),
-          ),
-          Positioned( // Torch toggle button
-            bottom: 200, // Position below the central rectangle
-            left: MediaQuery.of(context).size.width / 2 - 30, // Center horizontally
-            child: FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  isTorchOn = !isTorchOn; // Toggle torch state
-                  cameraController.toggleTorch(); // Toggle the torch
-                });
-              },
-              child: Icon(
-                isTorchOn ? Icons.flash_on : Icons.flash_off,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.blue, // System blue color
-            ),
-          ),
-        ],
-      ),
-    );
+  void toggleTorch() {
+    isTorchOn.value = !isTorchOn.value;
+    cameraController.toggleTorch();
   }
 
   void _showScannedDataDialog(String? qrCodeData) {
     if (qrCodeData != null) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Scanned QR Code'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('Data:'),
-                  Text(qrCodeData),
-                ],
-              ),
+      Get.dialog(
+        AlertDialog(
+          title: const Text('Scanned QR Code'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                const Text('Data:'),
+                Text(qrCodeData),
+              ],
             ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Copy'),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: qrCodeData));
-                  Navigator.of(context).pop();
-                  cameraController.start(); // Resume scanning
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('QR Code copied to clipboard')),
-                  );
-                },
-              ),
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  cameraController.start(); // Resume scanning
-                },
-              ),
-            ],
-          );
-        },
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Copy'),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: qrCodeData));
+                Get.back();
+                cameraController.start();
+                Get.snackbar('Copied', 'QR Code copied to clipboard');
+              },
+            ),
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Get.back();
+                cameraController.start();
+              },
+            ),
+          ],
+        ),
       );
     }
   }
 
   @override
-  void dispose() {
+  void onClose() {
     cameraController.dispose();
-    super.dispose();
+    super.onClose();
+  }
+}
+
+class LocalAccess extends StatelessWidget {
+  LocalAccess({super.key});
+
+  final LocalAccessController controller = Get.put(LocalAccessController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (!controller.isSupportedPlatform.value) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Get.back(),
+            ),
+            title: const Text(''),
+            centerTitle: false,
+          ),
+          body: const Center(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                'This application feature is only supported on Android and iOS devices.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ),
+        );
+      }
+
+      if (!controller.cameraPermissionGranted.value) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Get.back(),
+            ),
+            title: const Text(''),
+            centerTitle: false,
+          ),
+          body: const Center(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                'Camera permission not granted. Please enable camera permission in app settings to use the QR Scanner.',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        );
+      }
+
+      return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Get.back(),
+          ),
+          title: const Text(''),
+          centerTitle: false,
+          backgroundColor: Colors.grey[900],
+          foregroundColor: Colors.white,
+        ),
+        body: Stack(
+          children: [
+            MobileScanner(
+              controller: controller.cameraController,
+              fit: BoxFit.cover,
+              onDetect: controller.onDetect,
+            ),
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Container(
+                  decoration: ShapeDecoration(
+                    shape: QrScannerOverlayShape(
+                      borderColor: Colors.grey[300]!,
+                      borderRadius: 20,
+                      borderLength: 20,
+                      borderWidth: 5,
+                      cutOutSize: MediaQuery.of(context).size.width * 0.6,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 20,
+              left: 20,
+              right: 20,
+              child: const Text(
+                'SCAN TO CONNECT',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 60,
+              left: 20,
+              right: 20,
+              child: const Text(
+                'Scan the QR code on the device to connect the device.\nIf there is no QR code or the code cannot be identified,\nplease tap “Manual Connection”.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            Obx(() => controller.qrCodeNotFound.value
+                ? Positioned(
+                    bottom: 100,
+                    left: 20,
+                    right: 20,
+                    child: Center(
+                      child: Text(
+                        'QR code not found',
+                        style: TextStyle(
+                          color: Colors.blue[300],
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink()),
+            Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text('Manual Connection'),
+              ),
+            ),
+            Positioned(
+              bottom: 200,
+              left: MediaQuery.of(context).size.width / 2 - 30,
+              child: FloatingActionButton(
+                onPressed: controller.toggleTorch,
+                child: Obx(() => Icon(
+                      controller.isTorchOn.value ? Icons.flash_on : Icons.flash_off,
+                      color: Colors.white,
+                    )),
+                backgroundColor: Colors.blue,
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -369,13 +362,13 @@ class QrScannerOverlayShape extends ShapeBorder {
     canvas.drawPath(
       getOuterPath(rect),
       Paint()
-        ..color = Colors.grey[300]!.withOpacity(0.5) // Light grey outer area
+        ..color = Colors.grey[300]!.withOpacity(0.5)
         ..style = PaintingStyle.fill,
     );
 
     // 2. Draw the Transparent Inner Area
     final cutOutPaint = Paint()
-      ..color = Colors.transparent // Fully transparent inner area
+      ..color = Colors.transparent
       ..style = PaintingStyle.fill;
     final cutOutRectForInner = Rect.fromCenter(
       center: rect.center.translate(0, cutOutBottomOffset),

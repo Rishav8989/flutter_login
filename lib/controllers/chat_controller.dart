@@ -38,9 +38,8 @@ class ChatController extends GetxController {
   }
 
   void handleAttachmentPressed(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) => SafeArea(
+    Get.bottomSheet( // Use Get.bottomSheet for bottom sheet
+      SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(
@@ -61,7 +60,7 @@ class ChatController extends GetxController {
                         padding: EdgeInsets.zero,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back(); // Use Get.back to dismiss bottom sheet
                         handleImageSelection();
                       },
                       child: Row(
@@ -89,7 +88,7 @@ class ChatController extends GetxController {
                         padding: EdgeInsets.zero,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back(); // Use Get.back to dismiss bottom sheet
                         handleFileSelection();
                       },
                       child: Row(
@@ -107,6 +106,11 @@ class ChatController extends GetxController {
             ),
           ),
         ),
+      ),
+      backgroundColor: Colors.white, // Optional: Set background color for bottomSheet
+      elevation: 2, // Optional: Set elevation
+      shape: RoundedRectangleBorder( // Optional: Customize shape
+        borderRadius: BorderRadius.circular(10),
       ),
     );
   }
@@ -355,25 +359,27 @@ class ChatController extends GetxController {
   }
 
   void showMessageContextMenu(BuildContext context, types.Message message) {
-    showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(0, 0, 0, 0),
-      items: [
-        PopupMenuItem(
-          value: 'delete',
-          child: const Text('Delete'),
+    Get.dialog( // Use Get.dialog for showing context menu as dialog
+      AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('Delete'),
+              onTap: () {
+                Get.back(); // Dismiss the dialog
+                messages.removeWhere((msg) => msg.id == message.id);
+                saveMessageToFile(types.TextMessage(
+                  author: user,
+                  createdAt: DateTime.now().millisecondsSinceEpoch,
+                  id: const Uuid().v4(),
+                  text: '',
+                ));
+              },
+            ),
+          ],
         ),
-      ],
-    ).then((value) {
-      if (value == 'delete') {
-        messages.removeWhere((msg) => msg.id == message.id);
-        saveMessageToFile(types.TextMessage(
-          author: user, // Using public 'user'
-          createdAt: DateTime.now().millisecondsSinceEpoch,
-          id: const Uuid().v4(),
-          text: '',
-        ));
-      }
-    });
+      ),
+    );
   }
 }

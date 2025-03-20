@@ -61,7 +61,7 @@ class _FeedbackOnFaultsTabState extends State<FeedbackOnFaultsTab> {
                 return null;
               },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const Text('Attachment'),
             const SizedBox(height: 10),
             _buildUploadSection(),

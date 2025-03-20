@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:get/get.dart'; // Import GetX
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -61,8 +62,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
           );
         }
 
-        // Navigate back to login page after successful registration
-        Navigator.pop(context); // Go back to the previous page (LoginPage)
+        // Navigate back to login page after successful registration using GetX
+        Get.back(); // Go back to the previous page (LoginPage) using GetX
 
       } catch (e) {
         print('Registration Error: $e');
@@ -206,7 +207,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       constraints: BoxConstraints(maxWidth: maxWidth),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pop(context); // Go back to Login Page
+                          Get.back(); // Go back to Login Page using GetX
                         },
                         child: const Text('Already have an account? Login'),
                       ),

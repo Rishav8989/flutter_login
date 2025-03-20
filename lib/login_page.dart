@@ -3,6 +3,7 @@ import 'package:login/registration_page.dart';
 import 'pages/home_page.dart'; // Import HomePage
 import 'main.dart'; // Import the global pb instance
 import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
+import 'package:get/get.dart'; // Import GetX
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -47,12 +48,9 @@ class _LoginPageState extends State<LoginPage> {
         // Store the token in cache
         await _storeToken(pb.authStore.token);
 
+        // Navigate to the home page using GetX
+        Get.offAll(() => const HomePage());
 
-        // Navigate to the home page
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
-        );
       } catch (e) {
         // Catch ANY error for now - simplified error handling
         print(
@@ -121,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
+                      textInputAction: TextInputAction.next, // Moves focus to next field on Enter
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -140,6 +139,12 @@ class _LoginPageState extends State<LoginPage> {
                           return 'Please enter your password';
                         }
                         return null;
+                      },
+                      textInputAction: TextInputAction.done, // Hides keyboard on Enter
+                      onFieldSubmitted: (value) {
+                        if (_emailController.text.isNotEmpty) {
+                          _login();
+                        }
                       },
                     ),
                   ),
@@ -166,12 +171,8 @@ class _LoginPageState extends State<LoginPage> {
                     constraints: BoxConstraints(maxWidth: maxWidth),
                     child: TextButton(
                       onPressed: () {
-                        // Navigate to registration page (correct navigation using Navigator.push)
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RegistrationPage()),
-                        );
+                        // Navigate to registration page using GetX
+                        Get.to(() => const RegistrationPage());
                       },
                       child: const Text('Don\'t have an account? Register'),
                     ),
