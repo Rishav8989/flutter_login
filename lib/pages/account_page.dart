@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login/pages/accounts/about_page.dart';
 import 'package:login/pages/accounts/account_and_security_page.dart';
-import 'package:login/pages/accounts/declaration_page.dart';
 import 'package:login/pages/accounts/general_page.dart';
 import 'package:login/pages/accounts/my_service_provider_page.dart';
 import 'package:login/pages/accounts/notifications_page.dart';
-import 'package:login/pages/accounts/reports_page.dart';
 import 'package:login/pages/accounts/profile_page.dart';
+import 'package:login/pages/support/user_manual_page.dart';
+import 'package:login/widgets/detailed_chart.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:login/login_page.dart';
 import 'package:login/utils/auth/logout_confirmation_dialog.dart';
@@ -114,11 +114,11 @@ class AccountPage extends StatelessWidget {
                       _buildListTile(Icons.web, 'website'.tr, null,
                           () => _launchWebsite()),
                       _buildListTile(Icons.insert_chart, 'reports'.tr,
-                          const ReportsPage()),
+                          const DetailedChart()),
                       _buildListTile(Icons.share, 'app_sharing'.tr, null,
                           () => _launchApplicationSharingUrl()),
                       _buildListTile(Icons.description, 'declaration'.tr,
-                          const DeclarationPage()),
+                          const UserManualPage()),
                       _buildListTile(
                           Icons.info_outline, 'about'.tr, const AboutPage()),
                     ],
