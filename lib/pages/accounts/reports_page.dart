@@ -1,5 +1,6 @@
 // lib/pages/reports_page.dart
 import 'package:flutter/material.dart';
+import 'package:login/widgets/detailed_chart.dart';
 
 class ReportsPage extends StatelessWidget {
   const ReportsPage({super.key});
@@ -9,7 +10,7 @@ class ReportsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Reports')),
       body: const Center(
-        child: Text('Reports Page Content'),
+        child: DetailedChart(),
       ),
     );
   }
