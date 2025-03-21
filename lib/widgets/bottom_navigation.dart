@@ -21,10 +21,6 @@ class HomeBottomNavigation extends StatelessWidget {
           label: 'Monitoring'.tr, // Translate Bottom Navigation labels
         ),
         BottomNavigationBarItem(
-          icon: const Icon(Icons.warning),
-          label: 'Faults'.tr, // Translate Bottom Navigation labels
-        ),
-        BottomNavigationBarItem(
           icon: const Icon(Icons.support_agent),
           label: 'Support'.tr, // Translate Bottom Navigation labels
         ),

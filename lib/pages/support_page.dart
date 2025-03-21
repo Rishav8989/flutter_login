@@ -46,7 +46,7 @@ class SupportPage extends StatelessWidget {
                   icon: Icons.wifi,
                   text: 'WLAN Configuration'.tr,
                   onTap: () {
-                    Get.to(() => const WLANConfigurationPage());
+                    Get.to(() => LocalAccess());
                   },
                 ),
                 _buildSupportCard(
@@ -114,6 +114,7 @@ class SupportPage extends StatelessWidget {
       child: Text(
         title,
         style: theme.textTheme.headlineSmall?.copyWith(
+          fontSize: 20, // Increased font size
           color: theme.textTheme.headlineSmall?.color,
         ),
       ),
@@ -147,7 +148,9 @@ class SupportPage extends StatelessWidget {
                 Expanded(
                   child: Text(
                     text,
-                    style: theme.textTheme.bodyMedium,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontSize: 16, // Increased font size
+                    ),
                   ),
                 ),
                 Icon(Icons.chevron_right, color: theme.disabledColor, size: 20,), // Removed const here

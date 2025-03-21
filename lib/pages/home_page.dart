@@ -4,7 +4,6 @@ import 'package:get/get.dart'; // Import GetX
 import 'package:login/utils/translation/locale_controller.dart';
 import 'package:login/widgets/bottom_navigation.dart'; // Import HomeBottomNavigation Widget
 import 'package:login/pages/account_page.dart'; // Import your page files from 'pages' folder (Correct paths!)
-import 'package:login/pages/faults_page.dart';
 import 'package:login/pages/monitoring_page.dart';
 import 'package:login/pages/support_page.dart';
 import 'package:login/widgets/home_app_bar_widget.dart'; // Import HomeAppBarWidget <--- IMPORT HERE
@@ -21,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0; // To keep track of the current selected tab
   final List<Widget> _pages = const [ // List of pages for bottom navigation
     MonitoringPage(),
-    FaultsPage(),
     SupportPage(),
     AccountPage(),
   ];

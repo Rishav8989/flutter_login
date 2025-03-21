@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login/utils/theme/theme_switcher_buttons.dart';
 import 'package:login/utils/translation/language_selector.dart';
-import 'package:login/utils/auth/logout_button.dart';
 
 class HomeAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBarWidget({super.key});
