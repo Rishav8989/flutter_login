@@ -108,10 +108,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Email or Username',
                         prefixIcon: Icon(Icons.email),
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0), // Rounded border
+                        ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -129,10 +131,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextFormField(
                       controller: _passwordController,
                       obscureText: true,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Password',
                         prefixIcon: Icon(Icons.lock),
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0), // Rounded border
+                        ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -163,6 +167,11 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             )
                           : const Text('Login'),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0), // Rounded border
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),

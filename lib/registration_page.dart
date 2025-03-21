@@ -121,10 +121,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       child: TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration( // Added InputDecoration
                           labelText: 'Email',
-                          prefixIcon: Icon(Icons.email),
-                          border: OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.email),
+                          border: OutlineInputBorder( // Added rounded border
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -139,10 +141,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       constraints: BoxConstraints(maxWidth: maxWidth),
                       child: TextFormField(
                         controller: _nameController, // Optional Name field
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration( // Added InputDecoration
                           labelText: 'Name (Optional)',
-                          prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.person),
+                          border: OutlineInputBorder( // Added rounded border
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         ),
                       ),
                     ),
@@ -152,10 +156,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       child: TextFormField(
                         controller: _passwordController,
                         obscureText: true,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration( // Added InputDecoration
                           labelText: 'Password',
-                          prefixIcon: Icon(Icons.lock),
-                          border: OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.lock),
+                          border: OutlineInputBorder( // Added rounded border
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -173,10 +179,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       child: TextFormField(
                         controller: _passwordConfirmController,
                         obscureText: true,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration( // Added InputDecoration
                           labelText: 'Confirm Password',
-                          prefixIcon: Icon(Icons.lock_outline),
-                          border: OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.lock_outline),
+                          border: OutlineInputBorder( // Added rounded border
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -191,6 +199,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       constraints: BoxConstraints(maxWidth: maxWidth),
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _register,
+                        style: ElevatedButton.styleFrom( // Add rounded border to button
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
                         child: _isLoading
                             ? const SizedBox(
                                 height: 20,
