@@ -1,6 +1,6 @@
-// lib/support_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart'; // Add this import
 import 'package:login/pages/support/chat_page.dart';
 import 'package:login/pages/support/faqs_page.dart';
 import 'package:login/pages/support/feedback_page.dart';
@@ -53,8 +53,14 @@ class SupportPage extends StatelessWidget {
                   context: context,
                   icon: Icons.download,
                   text: 'Firmware Download'.tr,
-                  onTap: () {
-                    Get.to(() => const FirmwareDownloadPage());
+                  onTap: () async {
+                    const url = 'https://github.com/Rishav8989/flutter_login/releases';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      // Handle error if URL cannot be launched
+                      throw 'Could not launch $url';
+                    }
                   },
                 ),
 
