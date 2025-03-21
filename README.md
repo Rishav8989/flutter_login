@@ -3,7 +3,7 @@
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/)
 [![PocketBase](https://img.shields.io/badge/PocketBase-333333?style=for-the-badge&logo=pocketbase&logoColor=white)](https://pocketbase.io/)
 
-**Connect with me:** [Your Profile Website Link](https://rishavwiki.netlify.app/)
+**Connect with me:** [My Website](https://rishavwiki.netlify.app/)
 
 ## What is Solar?
 
