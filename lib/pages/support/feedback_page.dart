@@ -66,19 +66,24 @@ class _FeedbackPageState extends State<FeedbackPage> with SingleTickerProviderSt
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          FeedbackOnFaultsTab(
-            problemDescriptionController: _problemDescriptionController,
-            contactInfoController: _contactInfoController,
-            uploadedFiles: _uploadedFiles,
-            selectFiles: _selectFiles,
-            characterCount: _characterCount,
-            formKey: _formKey,
+      body: Center( // Add Center widget to center the content
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              FeedbackOnFaultsTab(
+                problemDescriptionController: _problemDescriptionController,
+                contactInfoController: _contactInfoController,
+                uploadedFiles: _uploadedFiles,
+                selectFiles: _selectFiles,
+                characterCount: _characterCount,
+                formKey: _formKey,
+              ),
+              const SoftwareAdviceTab(),
+            ],
           ),
-          const SoftwareAdviceTab(),
-        ],
+        ),
       ),
     );
   }
