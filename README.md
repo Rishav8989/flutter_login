@@ -5,6 +5,14 @@
 
 **Connect with me:** [My Website](https://rishavwiki.netlify.app/)
 
+## Demo Video
+
+
+https://github.com/user-attachments/assets/68be390e-85c4-4693-bfb1-e10ac8fe1803
+
+
+
+
 ## What is Solar?
 
 Imagine you have a bunch of smart devices at home or in your office. "Solar" is a mobile app that makes it super easy to connect to them! Instead of typing in complicated codes or searching through menus, you can simply scan a QR code with your phone's camera, and *voila*! You're connected.
