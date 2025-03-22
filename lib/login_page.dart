@@ -158,6 +158,11 @@ class _LoginPageState extends State<LoginPage> {
                     constraints: BoxConstraints(maxWidth: maxWidth),
                     child: ElevatedButton(
                       onPressed: _isLoading ? null : _login,
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0), // Rounded border
+                        ),
+                      ),
                       child: _isLoading
                           ? const SizedBox(
                               height: 20,
@@ -167,11 +172,6 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             )
                           : const Text('Login'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0), // Rounded border
-                        ),
-                      ),
                     ),
                   ),
                   const SizedBox(height: 20),

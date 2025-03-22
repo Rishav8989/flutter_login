@@ -9,8 +9,7 @@ class ChartSection extends StatelessWidget {
   final String title;
   final List<Widget> charts;
 
-  const ChartSection({Key? key, required this.title, required this.charts})
-      : super(key: key);
+  const ChartSection({super.key, required this.title, required this.charts});
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +41,14 @@ class SingleChart extends StatelessWidget {
   final double? maxWidth; // Add a maxWidth parameter
 
   const SingleChart({
-    Key? key,
+    super.key,
     required this.title,
     required this.getValue,
     required this.color,
     required this.description,
     required this.data,
     this.maxWidth, // Optional maxWidth
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +203,7 @@ class SingleChart extends StatelessWidget {
             getTooltipItems: (List<LineBarSpot> touchedSpots) {
               return touchedSpots.map((LineBarSpot barSpot) {
                 return LineTooltipItem(
-                  '${barSpot.y.toStringAsFixed(2)}', // Just the value
+                  barSpot.y.toStringAsFixed(2), // Just the value
                   TextStyle(
                     color: barSpot.bar.color,
                     fontWeight: FontWeight.bold,

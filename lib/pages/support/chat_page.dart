@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:login/controllers/chat_controller.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -45,7 +44,7 @@ class ChatPage extends StatelessWidget {
                       inputPadding: const EdgeInsets.all(12),
                       inputMargin: const EdgeInsets.all(8),
                       inputBorderRadius: const BorderRadius.all(Radius.circular(20)),
-                      backgroundColor: themeData.colorScheme.background,
+                      backgroundColor: themeData.colorScheme.surface,
                       inputBackgroundColor: themeData.colorScheme.surface,
                       primaryColor: themeData.colorScheme.primary,
                       inputTextColor: themeData.colorScheme.onSurface,

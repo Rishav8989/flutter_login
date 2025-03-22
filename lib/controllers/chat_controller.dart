@@ -270,7 +270,7 @@ class ChatController extends GetxController {
 
     try {
       final response = await http.post(
-        Uri.parse('${geminiApiUrl}?key=$apiKey'), // Append API key as query parameter
+        Uri.parse('$geminiApiUrl?key=$apiKey'), // Append API key as query parameter
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'contents': [
@@ -335,7 +335,7 @@ class ChatController extends GetxController {
       final file = File('${documentsDir.path}/messages.json');
 
       final List<Map<String, dynamic>> messagesJson = messages
-          .map((msg) => msg.toJson() as Map<String, dynamic>)
+          .map((msg) => msg.toJson())
           .toList();
 
       await file.writeAsString(jsonEncode(messagesJson));

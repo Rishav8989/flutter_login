@@ -257,11 +257,11 @@ class LocalAccess extends StatelessWidget {
               left: MediaQuery.of(context).size.width / 2 - 30,
               child: FloatingActionButton(
                 onPressed: controller.toggleTorch,
+                backgroundColor: Colors.blue,
                 child: Obx(() => Icon(
                       controller.isTorchOn.value ? Icons.flash_on : Icons.flash_off,
                       color: Colors.white,
                     )),
-                backgroundColor: Colors.blue,
               ),
             ),
           ],

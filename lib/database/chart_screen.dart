@@ -5,7 +5,7 @@ import 'data_point.dart';
 import 'chart_widgets.dart'; // Import the chart widgets
 
 class ChartScreen extends StatefulWidget {
-  const ChartScreen({Key? key}) : super(key: key);
+  const ChartScreen({super.key});
 
   @override
   _ChartScreenState createState() => _ChartScreenState();

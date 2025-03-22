@@ -15,10 +15,6 @@ class ThemeController extends GetxController {
   final String _themeKey = 'app_theme';
   bool _isThemeLoaded = false;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<void> loadInitialTheme() async {
     await _loadThemeFromPreferences();

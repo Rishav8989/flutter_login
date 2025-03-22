@@ -11,14 +11,14 @@ class FeedbackOnFaultsTab extends StatefulWidget {
   final GlobalKey<FormState> formKey;
 
   const FeedbackOnFaultsTab({
-    Key? key,
+    super.key,
     required this.problemDescriptionController,
     required this.contactInfoController,
     required this.uploadedFiles,
     required this.selectFiles,
     required this.characterCount,
     required this.formKey,
-  }) : super(key: key);
+  });
 
   @override
   _FeedbackOnFaultsTabState createState() => _FeedbackOnFaultsTabState();
@@ -93,10 +93,10 @@ class _FeedbackOnFaultsTabState extends State<FeedbackOnFaultsTab> {
                     // Handle form submission
                   }
                 },
-                child: const Text('Submit'),
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 50),
                 ),
+                child: const Text('Submit'),
               ),
               const SizedBox(height: 20),
               const Text('Note: If there is an urgent problem to be dealt with, please contact My service provider'),

@@ -1,11 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 
 class SoftwareAdviceTab extends StatefulWidget {
-  const SoftwareAdviceTab({Key? key}) : super(key: key);
+  const SoftwareAdviceTab({super.key});
 
   @override
   State<SoftwareAdviceTab> createState() => _SoftwareAdviceTabState();

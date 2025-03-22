@@ -74,7 +74,7 @@ class FAQsPage extends StatelessWidget {
               ),
         ),
         const SizedBox(height: 16),
-        ...content.map((text) => Text(text)).toList(),
+        ...content.map((text) => Text(text)),
         const SizedBox(height: 32),
         Divider(color: Colors.grey[300]),
         const SizedBox(height: 32),

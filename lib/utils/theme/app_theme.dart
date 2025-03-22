@@ -102,7 +102,6 @@ ThemeData darkTheme = ThemeData.dark().copyWith(
     ),
   ),
   colorScheme: ColorScheme.dark().copyWith(
-    surface: Colors.grey[850],      // Dark Grey Surface
-    background: Colors.grey[850],   // Dark Grey Background
+    surface: Colors.grey[850],   // Dark Grey Background
   ),
 );

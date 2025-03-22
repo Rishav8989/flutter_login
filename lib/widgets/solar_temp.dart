@@ -101,12 +101,13 @@ class _SolarTempState extends State<SolarTemp> {
   }
 
   SensorData _findSensorDataByX(int x, List<SensorData> data) {
-    if (data.isEmpty)
+    if (data.isEmpty) {
       return SensorData(
         dateTime: DateTime.now(),
         ambientTemperature: 0,
         moduleTemperature: 0,
       );
+    }
     SensorData closest = data.first;
     int closestDiff = (closest.dateTime.millisecondsSinceEpoch - x).abs();
     for (var entry in data) {

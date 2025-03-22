@@ -1,6 +1,6 @@
 // lib/pages/profile_page.dart
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // Import GetX for theming if needed
+// Import GetX for theming if needed
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -68,7 +68,7 @@ Center(
       CircleAvatar(
         radius: 50,
         backgroundImage: const NetworkImage('https://rishavwiki.netlify.app/assets/1707189968207-01.jpeg'), // **Use NetworkImage for your photo URL**
-        backgroundColor: Theme.of(context).colorScheme.surfaceVariant, // Theme aware surface variant color for Avatar background (fallback if image fails to load or is transparent)
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest, // Theme aware surface variant color for Avatar background (fallback if image fails to load or is transparent)
         onBackgroundImageError: (exception, stackTrace) { // Optional error handling
           print('Error loading image: $exception');
           // You can optionally show a placeholder icon or color here if the image fails to load.
@@ -100,7 +100,7 @@ Center(
                       borderSide: BorderSide(width: 2.0, color: Theme.of(context).primaryColor), // Example: Use primary color when focused
                     ),
                     filled: true,
-                    fillColor: Theme.of(context).colorScheme.surfaceVariant, // Theme aware surface variant color for input background
+                    fillColor: Theme.of(context).colorScheme.surfaceContainerHighest, // Theme aware surface variant color for input background
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0), // Increased vertical padding
                   ),
                   onChanged: (value) {
@@ -114,7 +114,7 @@ Center(
                 // Username Display
                 Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceVariant, // Theme aware surface variant color for container background
+                    color: Theme.of(context).colorScheme.surfaceContainerHighest, // Theme aware surface variant color for container background
                     borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                     border: Border.all(width: 1.0, color: Colors.grey.shade400), // Added border to Container
                   ),
@@ -147,7 +147,7 @@ Center(
                 // Country/Region ListTile
                 Card( // Using Card to mimic the rounded background and spacing
                   elevation: 0, // No shadow
-                  color: Theme.of(context).colorScheme.surfaceVariant, // Theme aware surface variant color for Card background
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest, // Theme aware surface variant color for Card background
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       side: BorderSide(width: 1.0, color: Colors.grey.shade400) // Added border to Card
@@ -179,7 +179,7 @@ Center(
                 // Email ListTile
                 Card(
                   elevation: 0,
-                  color: Theme.of(context).colorScheme.surfaceVariant, // Theme aware surface variant color for Card background
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest, // Theme aware surface variant color for Card background
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       side: BorderSide(width: 1.0, color: Colors.grey.shade400) // Added border to Card
@@ -211,7 +211,7 @@ Center(
                 // Time Zone ListTile
                 Card(
                   elevation: 0,
-                  color: Theme.of(context).colorScheme.surfaceVariant, // Theme aware surface variant color for Card background
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest, // Theme aware surface variant color for Card background
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       side: BorderSide(width: 1.0, color: Colors.grey.shade400) // Added border to Card

@@ -5,7 +5,7 @@ import 'package:login/database/data_point.dart';
 import 'package:login/database/database_helper.dart';
 
 class DetailedChart extends StatefulWidget {
-  const DetailedChart({Key? key}) : super(key: key);
+  const DetailedChart({super.key});
 
   @override
   _DetailedChartState createState() => _DetailedChartState();

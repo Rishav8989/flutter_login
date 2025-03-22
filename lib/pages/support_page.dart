@@ -4,10 +4,8 @@ import 'package:url_launcher/url_launcher.dart'; // Add this import
 import 'package:login/pages/support/chat_page.dart';
 import 'package:login/pages/support/faqs_page.dart';
 import 'package:login/pages/support/feedback_page.dart';
-import 'package:login/pages/support/firmware_download_page.dart';
 import 'package:login/pages/support/user_manual_page.dart';
 import 'package:login/pages/support/video_tutorial_page.dart';
-import 'package:login/pages/support/wlan_configuration_page.dart';
 import 'package:login/pages/support/local_access.dart';
 
 

@@ -4,14 +4,10 @@ import 'package:login/pages/accounts/about_page.dart';
 import 'package:login/pages/accounts/account_and_security_page.dart';
 import 'package:login/pages/accounts/general_page.dart';
 import 'package:login/pages/accounts/my_service_provider_page.dart';
-import 'package:login/pages/accounts/notifications_page.dart';
 import 'package:login/pages/accounts/profile_page.dart';
 import 'package:login/pages/support/user_manual_page.dart';
 import 'package:login/widgets/detailed_chart.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:login/login_page.dart';
-import 'package:login/utils/auth/logout_confirmation_dialog.dart';
-import 'package:login/main.dart';
 import 'package:login/widgets/logout_button.dart'; // Import the new widget
 
 class AccountPage extends StatelessWidget {

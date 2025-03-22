@@ -38,6 +38,7 @@ dependencies:
   sqflite_common_ffi: ^2.3.5
   google_sign_in: ^6.3.0
 
+  intl: any
 flutter_native_splash:
   color: "#FFFFFF"
   image: assets/logo.png
